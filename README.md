@@ -139,21 +139,23 @@ Given that the state displayed to the agent is described in text, a mechanism fo
    - **Limitation**: Becomes infeasible when the state space is large, as it does not scale well with increasing complexity.
 
 2. **Vector Representation Generator**:
-   - **Description**: A more sophisticated approach involves designing a representation generator \( \psi_R(\cdot) \) that converts text descriptions into vector representations \( v_s = \psi_R(s) \). A popular method is using a bag-of-words model to represent textual descriptions.
+   - **Description**: A more sophisticated approach involves designing a representation generator `ψ_R(·)` that converts text descriptions into vector representations `v_s = ψ_R(s)`. A popular method is using a bag-of-words model to represent textual descriptions.
 
 #### Approximating Q-Values
 
-In large-scale games, maintaining Q-values for all possible state-action pairs is often impractical. To address this, we approximate \( Q(s, c) \) using a parameterized function:
+In large-scale games, maintaining Q-values for all possible state-action pairs is often impractical. To address this, we approximate `Q(s, c)` using a parameterized function:
 
-\[ Q(s, c; \theta) = \phi(s, c)^T \theta = \sum_{i=1}^{d} \phi_i(s, c) \theta_i \]
+<p align="center">
+  Q(s, c; θ) = φ(s, c)ᵀ θ = Σ(i=1 to d) φ_i(s, c) * θ_i
+</p>
 
 where:
-- \( \phi(s, c) \) is a fixed feature vector in \( \mathbb{R}^d \) for state-action pair \( (s, c) \).
-- \( \theta \in \mathbb{R}^d \) is a parameter vector shared across state-action pairs.
-- The challenge is to design the feature vectors \( \phi(s, c) \) effectively.
+- `φ(s, c)` is a fixed feature vector in ℝ^d for state-action pair `(s, c)`.
+- `θ ∈ ℝ^d` is a parameter vector shared across state-action pairs.
+- The challenge is to design the feature vectors `φ(s, c)` effectively.
 
 For DQN, the architecture differs significantly:
-- **Neural Network Representation**: Instead of using a parameterized function with \( \theta \), DQN utilizes neural networks to directly approximate the Q-value function. The network learns to represent state-action pairs and their values through its layers, eliminating the need for manually designed feature vectors.
+- **Neural Network Representation**: Instead of using a parameterized function with `θ`, DQN utilizes neural networks to directly approximate the Q-value function. The network learns to represent state-action pairs and their values through its layers, eliminating the need for manually designed feature vectors.
 
 
 ### Insight
