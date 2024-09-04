@@ -42,7 +42,7 @@ This project was divided into several key tasks, each of which presented its own
    - I extended the Q-learning algorithm using a linear approximation architecture with a bag-of-words representation for the textual state description.
 
 3. **Deep Q-Network (DQN) Implementation**:
-   - I implemented a deep Q-network to handle the complexity of the Home World environment.
+   - I implemented a deep Q-network to handle the the Home World environment with neural network applied.
 
 4. **Applying Q-learning Algorithms**:
    - Finally, I applied the Q-learning algorithms to the Home World game and analyzed the performance.
@@ -82,7 +82,7 @@ In this section, I provide an overview of the results obtained from applying the
 #### Effects of Alpha (α)
 
 - **Exploration Parameter ε**: Fixed at 0.5.
-- **Range of α**: Experiments are conducted with different values of α in the range [10⁻⁸, 1].
+- **Range of α**: Experiments are conducted with different values of α in the range [1e⁻⁶, 1]
 - **Convergence**: The algorithm does not converge for all values of α in less than 200 epochs.
 - **Convergence Rate**: The smaller the α, the slower the convergence.
 
