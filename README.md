@@ -68,7 +68,7 @@ You can install the required libraries using pip:
 pip install numpy matplotlib torch
 
 
-## Conclusion
+### Conclusion
 
 Working on the Home World project was a rewarding experience, as it allowed me to explore various reinforcement learning algorithms in a unique, text-based environment. This project not only enhanced my understanding of reinforcement learning but also provided practical insights into implementing these algorithms in different settings.
 
