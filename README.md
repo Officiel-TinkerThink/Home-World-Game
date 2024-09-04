@@ -17,7 +17,7 @@ This environment is represented by the tuple `<H, C, P, R, Ψ>`, where:
 - `Ψ` is the function mapping the hidden game state to the observable text description that the player sees.
 
 <p align="center">
-  <img src="/images/Game%20and%20Reward%20Rule.png" alt="Game and Reward Rule">
+  <img src="/images/Game%20&%20Reward%20Rule.png" alt="Game and Reward Rule">
 </p>
 
 
