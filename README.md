@@ -101,7 +101,7 @@ In this section, I provide an overview of the results obtained from applying the
 - **For very large ε (e.g., ε = 1)**: The algorithm converges slower compared to ε = 0.5.
 - **For very small ε (e.g., ε = 0.00001)**: The algorithm converges faster compared to ε = 0.5.
 
-### Analysis of Model Performance for Three Different Architectures
+### Analysis of Model Performance for Different Architectures
 
 <p align="center">
   <img src="/images/Tabular%20Q-Learning%20with%20Default%20Parameter.png" alt="Tabular Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
@@ -110,7 +110,7 @@ In this section, I provide an overview of the results obtained from applying the
 </p>
 
 <p align="center">
-  <strong>Figure 4. Performance Comparison of 3 Architectures of Q-Learning</strong>
+  <strong>Figure 4. Performance Comparison of Architectures of Q-Learning</strong>
 </p>
 
 #### Optimal Expected Reward
