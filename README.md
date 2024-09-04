@@ -103,6 +103,16 @@ In this section, I provide an overview of the results obtained from applying the
 
 ### Analysis of Model Performance for Three Different Architectures
 
+<p align="center">
+  <img src="/images/Tabular%20Q-Learning%20with%20Default%20Parameter.png" alt="Tabular Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="/images/Linear%20Q-Learning%20with%20Default%20Parameter.png" alt="Linear Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="/images/Deep%20Q-Learning%20with%20Default%20Parameter.png" alt="Deep Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+</p>
+
+<p align="center">
+  <strong>Figure 4. Performance Comparison of 3 Architectures of Q-Learning</strong>
+</p>
+
 #### Optimal Expected Reward
 - The optimal expected reward for each episode is **0.55375**.
 
