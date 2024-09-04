@@ -16,6 +16,8 @@ This environment is represented by the tuple `<H, C, P, R, Ψ>`, where:
 - `R` is the deterministic reward function that assigns rewards based on the player's actions.
 - `Ψ` is the function mapping the hidden game state to the observable text description that the player sees.
 
+![Game and Reward Rule](/images/Game%20&%20Reward%20Rule.png)
+
 At the beginning of each episode, the player is placed in a random room and provided with a randomly selected quest. An example of a quest given to the player in text is "You are hungry now." To complete this quest, the player has to navigate through the house to reach the kitchen and eat the apple (i.e., type in the command `eat apple`). In this game, the room is hidden from the player, who only receives a description of the underlying room.
 
 The underlying game state is given by `h = (r, q)`, where `r` is the index of the room and `q` is the index of the quest. At each step, the text description provided to the player contains two parts `s = (sr, sq)`, where `sr` is the room description (which are varied and randomly provided) and `sq` is the quest description. The player receives a positive reward for completing a quest and negative rewards for invalid commands (e.g., `eat TV`). Each non-terminating step incurs a small deterministic negative reward, which incentivizes the player to learn policies that solve quests in fewer steps. (see Table)
