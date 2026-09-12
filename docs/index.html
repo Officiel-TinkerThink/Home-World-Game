@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home World</title>
+  <meta name="description" content="A text-based house you explore from descriptions alone — play it, then train tabular, linear and deep Q-learning agents in your browser and watch them solve quests." />
+  <meta property="og:title" content="Home World — a text game for reinforcement learning" />
+  <meta property="og:description" content="Play the text adventure, train three Q-learning agents live, and watch their Q-values as they play." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 12 L92 48 L82 48 L82 88 L18 88 L18 48 L8 48 Z' fill='%23c2410c'/><rect x='42' y='60' width='16' height='28' fill='%23fff7ed'/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">🏠</span>
+      <div>
+        <h1>Home World</h1>
+        <p>A text game for reinforcement learning — play it, then train agents to play it</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="play" role="tab">Play</button>
+      <button class="tab" data-tab="train" role="tab">Train</button>
+      <button class="tab" data-tab="watch" role="tab">Watch</button>
+      <button class="tab" data-tab="about" role="tab">About</button>
+    </nav>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost toggle" id="btnSound" aria-pressed="true" title="Toggle sound">🔊</button>
+      <a class="btn btn-ghost" href="https://github.com/Officiel-TinkerThink/Home-World-Game" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- ============================================================ PLAY -->
+    <section class="tab-body active" data-tab="play">
+      <div class="grid2">
+        <div class="card term-card">
+          <div class="term-head">
+            <span class="quest" id="quest"></span>
+            <span class="steps" id="steps"></span>
+          </div>
+          <div class="term" id="term"></div>
+          <div class="cmd">
+            <div class="cmd-row">
+              <div class="cmd-group" id="actBtns"></div>
+              <div class="cmd-group" id="objBtns"></div>
+            </div>
+            <form class="cmd-form" id="cmdForm">
+              <span class="prompt">&gt;</span>
+              <input type="text" id="cmdInput" placeholder="type a command, e.g. go west or eat apple" autocomplete="off" spellcheck="false" />
+              <button class="btn btn-primary" type="submit" id="btnDo">Do it</button>
+            </form>
+          </div>
+          <div class="banner" id="banner" hidden></div>
+        </div>
+        <aside class="card side">
+          <div class="field row">
+            <label class="check"><input type="checkbox" id="chkReveal" /> Reveal the hidden room on the map</label>
+          </div>
+          <div class="map" id="map"></div>
+          <div class="score" id="score"></div>
+          <div class="actions">
+            <button class="btn btn-primary" id="btnNew">New quest</button>
+            <button class="btn" id="btnRules">Rules &amp; rewards</button>
+          </div>
+          <div class="stat-tiles" id="stats"></div>
+          <ul class="achievements" id="achievements"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================================================ TRAIN -->
+    <section class="tab-body" data-tab="train">
+      <div class="card">
+        <h2>Train an agent</h2>
+        <p class="lead">Each epoch the agent plays 25 training episodes (ε = 0.5) and is then evaluated on 50 test episodes (ε = 0.05). The chart shows the average discounted test reward per epoch; the dashed line is the optimal expected reward, <b>0.55375</b>. Training happens in your browser — nothing is precomputed.</p>
+        <div class="toolbar">
+          <label>Agent <select id="agentSel">
+            <option value="tabular">Tabular Q-learning</option>
+            <option value="linear">Linear Q (bag of words)</option>
+            <option value="dqn">Deep Q-network (2-head MLP)</option>
+          </select></label>
+          <label>α learning rate <select id="alphaSel">
+            <option value="1">1</option><option value="0.1" selected>0.1</option><option value="0.01">0.01</option><option value="0.001">0.001</option><option value="0.0001">0.0001</option>
+          </select></label>
+          <label>ε training <select id="epsSel"><option value="1">1</option><option value="0.5" selected>0.5</option><option value="0.1">0.1</option><option value="0.00001">0.00001</option></select></label>
+          <label>Epochs <select id="epochSel"><option value="100">100</option><option value="200" selected>200</option><option value="300">300</option><option value="600">600</option></select></label>
+          <button class="btn btn-primary" id="btnTrain">▶ Train</button>
+          <button class="btn" id="btnPause" disabled>❚❚ Pause</button>
+          <button class="btn" id="btnResetAgent">Reset this agent</button>
+          <button class="btn" id="btnClearCurves">Clear chart</button>
+        </div>
+        <div class="stat-tiles" id="trainStats"></div>
+        <div class="chart-wrap">
+          <div class="chart-head"><h3>Test reward per epoch</h3><div class="legend" id="legend"></div></div>
+          <svg id="chart" class="chart" role="img" aria-label="Learning curves"></svg>
+          <div class="chart-tooltip" id="tip" hidden></div>
+        </div>
+        <p class="hint">Tip: α = 0.001 for the linear agent and α = 0.1 for tabular and DQN are the defaults from the Python scripts. Try α = 1 on tabular, or ε = 1 (pure exploration) — the learning curve changes shape exactly as in the project's analysis.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ WATCH -->
+    <section class="tab-body" data-tab="watch">
+      <div class="grid2">
+        <div class="card term-card">
+          <div class="term-head"><span class="quest" id="wQuest"></span><span class="steps" id="wSteps"></span></div>
+          <div class="term" id="wTerm"></div>
+          <div class="toolbar">
+            <label>Agent <select id="wAgent">
+              <option value="tabular">Tabular Q-learning</option>
+              <option value="linear">Linear Q</option>
+              <option value="dqn">Deep Q-network</option>
+            </select></label>
+            <button class="btn btn-primary" id="btnWNew">New episode</button>
+            <button class="btn" id="btnWStep">Step</button>
+            <button class="btn" id="btnWAuto">▶ Auto</button>
+            <label>Speed <input type="range" id="wSpeed" min="0" max="100" value="50" /></label>
+          </div>
+          <p class="hint" id="wNote"></p>
+        </div>
+        <aside class="card side">
+          <div class="map" id="wMap"></div>
+          <h3>Q-values for this observation</h3>
+          <p class="hint">Rows are actions, columns objects. The agent picks the brightest cell (ε = 0.05 at test time). For the DQN the two heads are combined for display.</p>
+          <div class="qgrid" id="qgrid"></div>
+          <div class="score" id="wScore"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================================================ ABOUT -->
+    <section class="tab-body" data-tab="about">
+      <div class="grid2 about">
+        <article class="card prose">
+          <h2>The environment</h2>
+          <p>A house with four rooms — <b>Living</b>, <b>Garden</b>, <b>Kitchen</b>, <b>Bedroom</b> — each with one useful object. At the start of an episode you're dropped in a random room and given a random quest: <em>You are bored / getting fat / hungry / sleepy.</em> To finish it you must reach the right room and use the right object: <code>watch tv</code>, <code>exercise bike</code>, <code>eat apple</code>, <code>sleep bed</code>.</p>
+          <p>The catch: you never see the room's name. Each step you get one of four <em>descriptions</em> of the room, chosen at random — sometimes helpful ("You can watch TV here"), sometimes oblique ("A red juicy fruit."). Formally the hidden state is <code>h = (room, quest)</code> and the observation is <code>s = (room description, quest text)</code>.</p>
+          <h3>Rewards</h3>
+          <table class="rw"><tr><td>Finish the quest</td><td class="num pos">+1</td></tr><tr><td>Any other valid command</td><td class="num">−0.01</td></tr><tr><td>Invalid command (e.g. <code>eat tv</code>)</td><td class="num neg">−0.11</td></tr><tr><td>Episode ends after</td><td class="num">20 steps</td></tr></table>
+          <p>With discount γ = 0.5 the best possible expected reward over random starts is <b>0.55375</b>: 1 if you start in the right room, 0.49 if it's next door, 0.235 if it's diagonally opposite.</p>
+          <img src="img/reward-rule.png" alt="Game and reward rule table" class="fig" />
+        </article>
+        <article class="card prose">
+          <h2>The agents</h2>
+          <ul>
+            <li><b>Tabular Q-learning</b> — one Q-value per (description, quest, action, object): 16 × 4 × 5 × 8 = 2,560 numbers. Learns fast and well, but every new sentence would need its own row.</li>
+            <li><b>Linear Q with bag-of-words</b> — the text becomes a word-count vector (84 words) and Q(s, c) = θ<sub>c</sub> · φ(s). Generalises across sentences but can't represent the interactions it needs; ends up the weakest.</li>
+            <li><b>Deep Q-network</b> — the same bag-of-words through a 100-unit ReLU layer with two output heads (actions, objects), trained with SGD on the squared TD error. Matches tabular performance while reading text.</li>
+          </ul>
+          <p>All three use the same update target <code>r + γ·max Q(s′, ·)</code> and the same ε-greedy schedule. The <b>Train</b> tab runs the exact procedure of <code>agent_tabular_ql.py</code>, <code>agent_linear.py</code> and <code>agent_dqn.py</code> in JavaScript; the <b>Watch</b> tab shows the resulting Q-tables at play time.</p>
+          <h3>Original results (Python, 10 runs averaged)</h3>
+          <div class="figs"><img src="img/tabular.png" alt="Tabular Q-learning curve" /><img src="img/linear.png" alt="Linear Q-learning curve" /><img src="img/dqn.png" alt="Deep Q-learning curve" /></div>
+          <p class="hint">Project from MITx 6.86x Machine Learning with Python. Python sources: <code>framework.py</code>, <code>agent_*.py</code>, <code>utils.py</code>.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">Built by <a href="https://github.com/Officiel-TinkerThink" target="_blank" rel="noopener">Wahyu Bornok Augus Sinurat</a> · Home World RL project · everything runs in your browser.</footer>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <dialog id="rulesDialog" class="dialog">
+    <form method="dialog">
+      <h2>How to play</h2>
+      <p>You're somewhere in a four-room house, but you only get a <em>description</em> of where you are. A quest tells you what you need. Move with <code>go north / south / east / west</code> and finish the quest with the right command in the right room: <code>watch tv</code>, <code>exercise bike</code>, <code>eat apple</code>, <code>sleep bed</code>.</p>
+      <table class="rw"><tr><td>Finish the quest</td><td class="num pos">+1</td></tr><tr><td>Valid command</td><td class="num">−0.01</td></tr><tr><td>Invalid command</td><td class="num neg">−0.11</td></tr><tr><td>Max steps</td><td class="num">20</td></tr></table>
+      <p>Your score is the discounted return (γ = 0.5): finishing in one step scores 1, two steps 0.49, three steps 0.235. Learn the house layout and the descriptions and you'll match the optimal agent.</p>
+      <div class="dialog-actions"><button class="btn btn-primary" value="close">Got it</button></div>
+    </form>
+  </dialog>
+
+  <script src="js/homeworld.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

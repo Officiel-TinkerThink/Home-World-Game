@@ -1,0 +1,9 @@
+{
+  "name": "home-world-game",
+  "version": "2.0.0",
+  "description": "Home World: play the text-based RL environment, train tabular / linear / deep Q-learning agents in the browser, and watch them play.",
+  "private": true,
+  "scripts": { "start": "python3 -m http.server 8000 --directory docs", "test": "node --test tests/*.test.js", "demo:record": "node scripts/record_demo.js" },
+  "devDependencies": { "playwright": "^1.62.1" },
+  "license": "MIT"
+}

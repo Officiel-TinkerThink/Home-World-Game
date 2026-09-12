@@ -1,4 +1,52 @@
-# Home World: A Text-Based Game Environment for Reinforcement Learning
+<div align="center">
+
+# 🏠 Home World
+
+**Try it now → [officiel-tinkerthink.github.io/Home-World-Game](https://officiel-tinkerthink.github.io/Home-World-Game/)**
+
+A text-based house you explore from descriptions alone. **Play** it yourself, **train** tabular, linear and deep
+Q-learning agents live in your browser, and **watch** them solve quests with their Q-values on screen.
+
+[![Live demo](https://img.shields.io/badge/live%20demo-open%20in%20browser-c2410c?style=for-the-badge&logo=github)](https://officiel-tinkerthink.github.io/Home-World-Game/)
+![RL](https://img.shields.io/badge/RL-tabular%20%C2%B7%20linear%20%C2%B7%20DQN-2f6fd6?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-JS%20%2B%20Python-15803d?style=for-the-badge)
+
+<img src="assets/demo.gif" alt="Demo: playing a quest, training tabular / DQN / linear agents with live learning curves, watching the DQN play" width="800">
+
+</div>
+
+---
+
+## The web app
+
+| Tab | What you can do |
+|---|---|
+| **Play** | The game as the agents see it: a random room described in one of four ways, a quest, and two-word commands (`go west`, `eat apple`). Rewards per step, discounted return vs the optimum for your start, a map that only fills in as you learn the house (or reveal it), achievements. |
+| **Train** | Train **Tabular Q-learning**, **Linear Q with bag-of-words** or a **two-head Deep Q-network** with the exact procedure of the Python scripts (25 training / 50 test episodes per epoch, ε-greedy). Pick α and ε, watch the test-reward curve against the 0.55375 optimum, compare agents on one chart. Tabular trains at ~500 epochs/s, the DQN at ~50. |
+| **Watch** | Step through an episode played by a trained agent — the text it sees, the command it picks, the hidden room on the map, and a heatmap of its Q-values for every (action, object) pair. |
+| **About** | The environment as an MDP, the reward table, the three agents, and the original Python results. |
+
+<div align="center">
+<img src="assets/train.png" alt="Learning curves for tabular Q-learning and DQN" width="800">
+<br><br>
+<img src="assets/watch.png" alt="Watching the DQN play with Q-values shown" width="800">
+</div>
+
+`docs/js/homeworld.js` ports `framework.py`, `utils.py` and all three agents to JavaScript (the DQN is a hand-written
+MLP with SGD, matching `agent_dqn.py`'s loss and update); the results match the Python plots below.
+
+### Run locally
+
+```bash
+git clone https://github.com/Officiel-TinkerThink/Home-World-Game.git && cd Home-World-Game
+python3 -m http.server 8000 --directory docs        # or: npm start
+node --test tests/*.test.js                         # JS engine: rewards, optimum, features, learning
+python3 -m unittest discover tests                  # Python environment + tabular agent (needs numpy, matplotlib, tqdm)
+```
+
+---
+
+# The original project: Home World, a text-based game environment for reinforcement learning
 
 ## Introduction
 
@@ -17,7 +65,7 @@ This environment is represented by the tuple `<H, C, P, R, Ψ>`, where:
 - `Ψ` is the function mapping the hidden game state to the observable text description that the player sees.
 
 <p align="center">
-  <img src="/images/Game%20&%20Reward%20Rule.png" alt="Game and Reward Rule">
+  <img src="assets/images/Game%20&%20Reward%20Rule.png" alt="Game and Reward Rule">
 </p>
 <p align="center">
   <strong>Figure 1. Game Rule and Reward Table</strong>
@@ -66,14 +114,14 @@ In this section, I provide an overview of the results obtained from applying the
 ### Hyperparameter Value Influence on Model Performance
 
 <p align="center">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1.png" alt="Alpha = 1" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-1.png" alt="Alpha = 1e-1" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-2.png" alt="Alpha = 1e-2" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1.png" alt="Alpha = 1" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-1.png" alt="Alpha = 1e-1" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-2.png" alt="Alpha = 1e-2" width="300" height="200" style="display:inline-block; margin:10px;">
 </p>
 <p align="center">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-4.png" alt="Alpha = 1e-4" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-5.png" alt="Alpha = 1e-5" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-6.png" alt="Alpha = 1e-6" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-4.png" alt="Alpha = 1e-4" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-5.png" alt="Alpha = 1e-5" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20alpha_equal_to_1e-6.png" alt="Alpha = 1e-6" width="300" height="200" style="display:inline-block; margin:10px;">
 </p>
 <p align="center">
   <strong>Figure 2. Hyperparameter Tuning of Alpha from 1 to 1e-6 Consecutively</strong>
@@ -87,8 +135,8 @@ In this section, I provide an overview of the results obtained from applying the
 - **Convergence Rate**: The smaller the α, the slower the convergence.
 
 <p align="center">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20epsilon_equal_to_1e-5.png" alt="Epsilon = 1e-5" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Tabular%20Q-Learning%20with%20HyperParameter%20epsilon_equal_to_1.png" alt="Epsilon = 1" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20epsilon_equal_to_1e-5.png" alt="Epsilon = 1e-5" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20HyperParameter%20epsilon_equal_to_1.png" alt="Epsilon = 1" width="300" height="200" style="display:inline-block; margin:10px;">
 </p>
 
 <p align="center">
@@ -104,9 +152,9 @@ In this section, I provide an overview of the results obtained from applying the
 ### Analysis of Model Performance for Different Architectures
 
 <p align="center">
-  <img src="/images/Tabular%20Q-Learning%20with%20Default%20Parameter.png" alt="Tabular Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Linear%20Q-Learning%20with%20Default%20Parameter.png" alt="Linear Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
-  <img src="/images/Deep%20Q-Learning%20with%20Default%20Parameter.png" alt="Deep Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Tabular%20Q-Learning%20with%20Default%20Parameter.png" alt="Tabular Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Linear%20Q-Learning%20with%20Default%20Parameter.png" alt="Linear Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
+  <img src="assets/images/Deep%20Q-Learning%20with%20Default%20Parameter.png" alt="Deep Q-Learning with Default Parameter" width="300" height="200" style="display:inline-block; margin:10px;">
 </p>
 
 <p align="center">
@@ -164,6 +212,15 @@ For DQN, the architecture differs significantly:
 - These observations highlight the importance of choosing the right architecture and representation mechanism for effective reinforcement learning. While tabular Q-learning works well for simple environments, more complex scenarios benefit from linear approximations or deep neural networks that handle large state spaces and intricate representations more effectively.
 
 
+
+## Running the Python agents
+
+```bash
+pip install -r requirements.txt
+python3 agent_tabular_ql.py     # 10 runs × 200 epochs, then a matplotlib plot
+python3 agent_linear.py
+python3 agent_dqn.py            # needs PyTorch
+```
 
 ## Setup Instructions
 
